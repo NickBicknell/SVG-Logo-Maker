@@ -1,7 +1,9 @@
+// imports/requires dependancies 
 const inquirer = require("inquirer");
 const fs = require("fs");
 const { Triangle, Square, Circle } = require("./lib/shapes");
 
+// questions to be prompted to user for logo creation
 const questions = [
     {
         type: "list",
@@ -26,6 +28,7 @@ const questions = [
     },
 ]
 
+// write file function and logs when svg file is generated
 function writeToFile(fileName, data) {
     fs.writeFile(fileName, data, err => {
         if (err) {
@@ -36,6 +39,7 @@ function writeToFile(fileName, data) {
     });
 };
 
+// function that takes the user response and selected the users selected shape
 function userShape(response) {
     if (response.shape === "Triangle") {
         let userChoice = new Triangle (response.shapeColor, response.text, response.textColor)
@@ -53,11 +57,13 @@ function userShape(response) {
     }
 };
 
+// function that creates logo and uses the writeToFile function to write the svg file
 function createLogo(response) {
     const logo = userShape(response);
     writeToFile("./examples/logo.svg", logo);
 }
 
+// initialize function that takes the users input to generate the svg logo
 function init() {
     inquirer
         .prompt(questions)
